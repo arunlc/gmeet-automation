@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { connect as mongoConnect } from 'mongoose';
 import sessionRoutes from './routes/sessionRoutes';
+import { sessionScheduler } from './automation/scheduler';
 
 // Initialize environment variables
 dotenv.config();
@@ -31,5 +32,22 @@ app.listen(PORT, () => {
 // Connect to MongoDB (we'll add the connection string later)
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/gmeet-automation';
 mongoConnect(MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => {
+    console.log('Connected to MongoDB');
+    // Start the session scheduler after MongoDB connection is established
+    sessionScheduler.start();
+  })
   .catch((error) => console.error('MongoDB connection error:', error));
+
+// Handle application shutdown
+process.on('SIGTERM', async () => {
+  console.log('Shutting down application...');
+  sessionScheduler.stop();
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  console.log('Shutting down application...');
+  sessionScheduler.stop();
+  process.exit(0);
+});
