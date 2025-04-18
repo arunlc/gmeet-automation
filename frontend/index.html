@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMeet Automation Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .session-card {
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        .session-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">GMeet Automation Dashboard</span>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSessionModal">
+                    Add New Session
+                </button>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <h4>Upcoming Sessions</h4>
+                <div id="upcomingSessions" class="row">
+                    <!-- Sessions will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h4>All Sessions</h4>
+                <div id="allSessions" class="row">
+                    <!-- Sessions will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Session Modal -->
+    <div class="modal fade" id="addSessionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSessionForm">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Meet Link</label>
+                            <input type="url" class="form-control" name="meetLink" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Start Time</label>
+                            <input type="datetime-local" class="form-control" name="startTime" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Duration (minutes)</label>
+                            <input type="number" class="form-control" name="duration" value="60" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tutors (comma-separated emails)</label>
+                            <input type="text" class="form-control" name="tutors" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Students (comma-separated emails)</label>
+                            <input type="text" class="form-control" name="students" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addSession()">Add Session</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
