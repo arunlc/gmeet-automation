@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { connect as mongoConnect } from 'mongoose';
+import sessionRoutes from './routes/sessionRoutes';
 
 // Initialize environment variables
 dotenv.config();
@@ -12,6 +13,9 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Add routes
+app.use('/api/sessions', sessionRoutes);
 
 // Basic route for testing
 app.get('/', (req, res) => {
